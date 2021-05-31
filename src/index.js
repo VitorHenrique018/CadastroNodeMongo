@@ -17,7 +17,9 @@ app.use((request, response, next) => {
 
   require('./controllers/authController')(app);
 
-  
+  app.get('/', (req,res) => {
+      res.send('OK');
+  })
 
 
 

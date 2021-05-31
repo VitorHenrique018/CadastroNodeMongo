@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('../database');
+
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -11,7 +13,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
     },
-    email: {
+    password: {
         type: String,
         require: true,
         select: false, //quando buscar um get dos usuarios, nao buscar a senha
@@ -20,6 +22,13 @@ const UserSchema = new mongoose.Schema({
 {
     timestamps: true,
 });
+
+UserSchema.pre('save', async function(next) { //pre Salvamento
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+
+    next();
+})
 
 const User = mongoose.model('User', UserSchema);
 
