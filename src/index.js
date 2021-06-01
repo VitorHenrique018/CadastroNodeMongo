@@ -14,13 +14,10 @@ app.use((request, response, next) => {
     next();//USADO PARA LIBERAR A APLICAÇÃO
   });
 
-
   require('./controllers/authController')(app);
 
   app.get('/', (req,res) => {
       res.send('OK');
   })
-
-
 
 app.listen(3001);
