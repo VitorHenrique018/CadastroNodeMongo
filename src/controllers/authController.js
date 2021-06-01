@@ -22,10 +22,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post('/authenticate', async (req, res) => {
+router.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await (await User.findOne({ email })).isSelected('+password');
+  const user = await User.findOne({ email }).select('+password');
 
   if(!user) {
     return res.status(400).send({ error: 'User not found '});
