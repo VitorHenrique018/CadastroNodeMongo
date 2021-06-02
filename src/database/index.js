@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 mongoose
   .connect("mongodb://localhost/noderest", {
@@ -14,7 +14,4 @@ mongoose
     console.log("Erro: Conexão não foi Realizada com sucesso");
   });
 
-  
-
 module.exports = mongoose;
-
