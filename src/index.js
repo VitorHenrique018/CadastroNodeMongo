@@ -14,8 +14,7 @@ app.use((request, response, next) => {
   next(); //USADO PARA LIBERAR A APLICAÇÃO
 });
 
-require("./controllers/authController")(app);
-require("./controllers/projectController")(app);
+require("./app/controllers/index")(app);
 
 app.get("/", (req, res) => {
   res.send("OK");
