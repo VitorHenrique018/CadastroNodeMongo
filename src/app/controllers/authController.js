@@ -55,7 +55,7 @@ router.post("/authenticate", async (req, res) => {
   }); // se der tudo certo, aparece os dados
 });
 
-router.post("/forgot_password", async (req, res) => {
+router.post("/forgot_password", async (req, res) => { //esta com erro
   const { email } = req.body;
 
   try {
