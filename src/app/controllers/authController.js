@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../../config/auth");
+const crypto = require("crypto");
 
 const router = express.Router();
 
@@ -52,6 +53,36 @@ router.post("/authenticate", async (req, res) => {
     user,
     token: generateToken({ id: user.id }),
   }); // se der tudo certo, aparece os dados
+});
+
+router.post("/forgot_password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(400).send({ error: "User not Found" });
+    }
+
+    const token = crypto.randomBytes(20).toString("hex");
+
+    const now = new Date();
+
+    now.setHours(now.getGours() + 1);
+
+    await User.findByIdAndUpdate(user.id, {
+      '$set': {
+        passwordResetToken: token,
+        passwordResetExpires: now,
+      }
+    });
+
+    console.log(token, now)
+
+  } catch (err) {
+    res.status(400).send({ error: "Erro on forgot password, try again" });
+  }
 });
 
 module.exports = (app) => app.use("/auth", router); //repassando o router pro app com o prefixo auth

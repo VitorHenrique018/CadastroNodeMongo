@@ -19,6 +19,14 @@ const UserSchema = new mongoose.Schema(
       require: true,
       select: false, //quando buscar um get dos usuarios, nao buscar a senha
     },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetExpires: {
+      type: Date,
+      select: false,
+    },
   },
   {
     timestamps: true,
